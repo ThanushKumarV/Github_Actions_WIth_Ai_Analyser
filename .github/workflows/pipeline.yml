@@ -1,0 +1,33 @@
+name: AI DevOps Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install -r app/requirements.txt
+          pip install requests
+
+      - name: Run app (capture error)
+        run: |
+          python app/app.py 2> error.log || true
+
+      - name: Run AI Log Analyzer
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python ai/log_analyzer.py
