@@ -25,9 +25,10 @@ jobs:
 
       - name: Run app (capture error)
         run: |
-          python app/app.py > output.log 2> error.log || true
+          python app/app.py > output.log 2> error.log
 
       - name: Run AI Log Analyzer
+        if: failure()
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: python ai/log_analyzer.py
