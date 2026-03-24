@@ -21,7 +21,7 @@ def analyze_logs(logs):
 
     data = response.json()
 
-    print("🔍 Full API Response:\n", data)   # DEBUG
+    # print("🔍 Full API Response:\n", data)   # DEBUG
 
     if "choices" not in data:
         return "❌ AI failed: " + str(data)
@@ -42,4 +42,4 @@ if __name__ == "__main__":
     result = analyze_logs(logs)
 
     print("\n✅ AI Analysis:\n")
-    print(result)
+    print(result)   
